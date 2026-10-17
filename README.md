@@ -20,7 +20,8 @@ iPhone/iPad: Web Push only works from the Home Screen app (iOS 16.4+); the page 
 | `index.html`, `styles.css`, `app.js` | The page (no framework, no build step) |
 | `sw.js` | Service worker: `push` → notification, `notificationclick` → open URL |
 | `manifest.webmanifest`, `icons/` | PWA install metadata and icons (`icons/*.svg` are the sources) |
-| `_headers` | Cloudflare Pages response headers (CSP, `no-cache` for `sw.js`) |
+| `_headers` | Response headers (CSP, `no-cache` for `sw.js`) |
+| `wrangler.jsonc`, `.assetsignore` | Cloudflare Worker config; files excluded from publishing |
 
 ## Run locally
 
@@ -30,6 +31,10 @@ python3 -m http.server 5173
 Open http://localhost:5173 — `localhost` counts as a secure context, and the API allows this origin via CORS.
 Brave: enable "Use Google services for push messaging" in `brave://settings/privacy`.
 
-## Deploy (Cloudflare Pages)
+## Deploy (Cloudflare Workers static assets)
 
-Connected to this GitHub repo; every push to `main` deploys. Build settings: framework preset **None**, build command empty, output directory `/`.
+The `flight-whisperer` Worker is connected to this repo (Workers Builds): every push to `main` runs `npx wrangler deploy`, which serves this directory as static assets per `wrangler.jsonc`.
+
+- `.assetsignore` keeps repo-only files (`.git`, README, config) from being published — add new non-public files there.
+- `_headers` sets the CSP and `no-cache` on `sw.js`.
+- Custom domain `flights.saurabhdamle.com` is attached in the Worker's **Settings → Domains & Routes**. The API only allows that origin (and `http://localhost:5173`) via CORS, so the `*.workers.dev` URL can't subscribe.

@@ -1,0 +1,9 @@
+// Cloudflare Workers static assets — deployed by Workers Builds on every push to main.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "flight-whisperer",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./"
+  }
+}
