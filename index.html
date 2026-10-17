@@ -5,99 +5,120 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Flight Whisperer</title>
   <meta name="description" content="Get a notification when a plane flies over your area.">
-  <meta name="theme-color" content="#0b1a33">
+  <meta name="theme-color" content="#030806">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Flights">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="preload" href="/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/share-tech-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
   <script src="/app.js" defer></script>
 </head>
 <body>
-  <main class="shell">
-    <header class="brand">
-      <img src="/icons/icon.svg" alt="" width="56" height="56">
-      <div>
-        <h1>Flight Whisperer</h1>
-        <p class="tagline">A notification whenever a plane flies over you.</p>
-      </div>
+  <div class="crt" aria-hidden="true"></div>
+
+  <main class="hud">
+    <header class="statusbar">
+      <span class="callsign">FLT-WHSPR</span>
+      <span class="sys"><span class="led" id="led"></span><span id="sys-status">SYS ONLINE</span></span>
     </header>
 
-    <section id="view-loading" class="card">
-      <p class="muted">Loading…</p>
+    <div class="title">
+      <h1>Flight Whisperer</h1>
+      <p class="tagline">Get pinged when a plane flies over you.</p>
+    </div>
+
+    <!-- Radar scope: decorative; the readout below carries the same info as text -->
+    <section class="scope-wrap" aria-label="Radar status">
+      <div class="scope" id="scope" aria-hidden="true">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="ring r3"></div>
+        <div class="axis"></div>
+        <div class="sweep"></div>
+        <div class="target"></div>
+        <span class="tick n">N</span>
+        <span class="tick range">25 KM</span>
+      </div>
+      <dl class="readout">
+        <div><dt>POS</dt><dd id="readout-pos">NO FIX</dd></div>
+        <div><dt>RNG</dt><dd>25 KM</dd></div>
+        <div><dt>STS</dt><dd id="readout-status">STANDBY</dd></div>
+      </dl>
+    </section>
+
+    <section id="view-loading" class="panel">
+      <p class="dim blink-text">INITIALISING…</p>
     </section>
 
     <!-- Browser can't do web push -->
-    <section id="view-unsupported" class="card" hidden>
-      <h2>This browser can't receive notifications</h2>
-      <p>Open this page in a recent version of Chrome, Edge, Firefox or Safari.</p>
+    <section id="view-unsupported" class="panel" hidden>
+      <h2 class="panel-head"><span>ERR</span> // Unsupported browser</h2>
+      <p>This browser can't receive notifications. Open this page in a recent Chrome, Edge, Firefox or Safari.</p>
     </section>
 
     <!-- iPhone / iPad: push only works from the Home Screen app -->
-    <section id="view-ios-install" class="card" hidden>
-      <h2>Add to your Home Screen first</h2>
-      <p>On iPhone and iPad, notifications only work after you install the app:</p>
-      <ol class="steps">
-        <li>Tap the <strong>Share</strong> button in Safari <span aria-hidden="true">(□↑)</span></li>
+    <section id="view-ios-install" class="panel" hidden>
+      <h2 class="panel-head"><span>PRE</span> // Install required</h2>
+      <p>On iPhone and iPad, alerts only work from the Home Screen app:</p>
+      <ol class="checklist">
+        <li>Tap <strong>Share</strong> in Safari</li>
         <li>Choose <strong>Add to Home Screen</strong></li>
-        <li>Open <strong>Flights</strong> from your Home Screen and subscribe there</li>
+        <li>Open <strong>Flights</strong> from your Home Screen</li>
       </ol>
-      <p class="muted small">Requires iOS 16.4 or later.</p>
+      <p class="dim small">Requires iOS 16.4 or later.</p>
     </section>
 
     <!-- Not subscribed: pick location, subscribe -->
-    <section id="view-setup" class="card" hidden>
-      <h2><span class="step-num">1</span> Where are you?</h2>
-      <p class="muted">We watch the sky within about 25 km of this spot.</p>
+    <section id="view-setup" class="panel" hidden>
+      <h2 class="panel-head"><span>01</span> // Position</h2>
+      <p class="dim">We scan the sky within 25 km of this point.</p>
 
-      <button id="btn-locate" class="btn btn-secondary" type="button">Use my current location</button>
+      <button id="btn-locate" class="btn btn-go" type="button">◎ Acquire position</button>
 
-      <form id="form-search" class="search" autocomplete="off">
-        <label for="input-city" class="muted small">…or search for your city</label>
-        <div class="search-row">
-          <input id="input-city" type="search" placeholder="e.g. Mumbai" minlength="2" required>
-          <button class="btn btn-secondary" type="submit">Search</button>
+      <form id="form-search" class="manual" autocomplete="off">
+        <label for="input-city" class="dim small">Manual entry</label>
+        <div class="manual-row">
+          <input id="input-city" type="search" placeholder="City name" minlength="2" required>
+          <button class="btn btn-go btn-small" type="submit">Ent</button>
         </div>
       </form>
       <ul id="search-results" class="results" hidden></ul>
 
-      <p id="chosen-location" class="chosen" hidden></p>
+      <p id="chosen-location" class="lock" hidden></p>
 
-      <h2><span class="step-num">2</span> Get notified</h2>
-      <p class="muted">Your browser will ask for permission to show notifications.</p>
-      <button id="btn-subscribe" class="btn btn-primary" type="button" disabled>Subscribe to flight alerts</button>
+      <h2 class="panel-head"><span>02</span> // Alerts</h2>
+      <p class="dim">Your browser will ask permission to show notifications.</p>
+      <button id="btn-subscribe" class="btn btn-arm" type="button" disabled>▶ Arm alerts</button>
     </section>
 
     <!-- Subscribed -->
-    <section id="view-subscribed" class="card" hidden>
-      <div class="status-row">
-        <span class="dot" aria-hidden="true"></span>
-        <h2>You're subscribed</h2>
-      </div>
-      <p>We'll notify you when a plane flies within <strong id="sub-radius">25</strong> km of
-        <strong id="sub-label">your location</strong>.</p>
-      <p class="muted small" id="sub-coords"></p>
+    <section id="view-subscribed" class="panel" hidden>
+      <h2 class="panel-head"><span>ON</span> // Alerts armed</h2>
+      <p>Tracking aircraft within <strong id="sub-radius">25</strong> km of <strong id="sub-label">your location</strong>.</p>
+      <p class="dim small" id="sub-coords"></p>
 
       <div class="actions">
-        <button id="btn-test" class="btn btn-secondary" type="button">Send a test notification</button>
-        <button id="btn-unsubscribe" class="btn btn-danger" type="button">Unsubscribe</button>
+        <button id="btn-test" class="btn btn-go" type="button">⟐ Test signal</button>
+        <button id="btn-unsubscribe" class="btn btn-abort" type="button">■ Disarm &amp; unsubscribe</button>
       </div>
     </section>
 
     <!-- Notifications blocked -->
-    <section id="view-denied" class="card" hidden>
-      <h2>Notifications are blocked</h2>
-      <p>You've blocked notifications for this site. To turn them back on, open your browser's site settings
-        (the icon to the left of the address bar), allow <strong>Notifications</strong>, then reload this page.</p>
-      <button id="btn-reload" class="btn btn-secondary" type="button">Reload</button>
+    <section id="view-denied" class="panel" hidden>
+      <h2 class="panel-head"><span>ERR</span> // Notifications blocked</h2>
+      <p>Notifications are blocked for this site. Open your browser's site settings (left of the address bar),
+        allow <strong>Notifications</strong>, then reload.</p>
+      <button id="btn-reload" class="btn btn-go" type="button">↻ Reload</button>
     </section>
 
-    <p id="message" class="message" role="status" aria-live="polite" hidden></p>
+    <p id="message" class="log" role="status" aria-live="polite" hidden></p>
 
-    <footer class="footer muted small">
-      Flight data from the <a href="https://opensky-network.org" target="_blank" rel="noopener">OpenSky Network</a>.
+    <footer class="footer">
+      Flight data: <a href="https://opensky-network.org" target="_blank" rel="noopener">OpenSky Network</a> ·
       Your location is only used to match planes overhead and is deleted when you unsubscribe.
     </footer>
   </main>

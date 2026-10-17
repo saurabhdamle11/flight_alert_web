@@ -26,6 +26,19 @@ let vapidKeyPromise = null; // fetched once per page load
 
 function show(view) {
   for (const v of VIEWS) $('view-' + v).hidden = v !== view;
+  if (view === 'unsupported' || view === 'denied') hud('error');
+  else if (view === 'setup' && !chosen) hud('standby');
+}
+
+/** Radar scope + status bar state: standby | locked | armed | error */
+function hud(state, pos) {
+  const scope = $('scope');
+  scope.classList.toggle('locked', state === 'locked');
+  scope.classList.toggle('armed', state === 'armed');
+  $('led').className = 'led' + (state === 'armed' ? '' : state === 'error' ? ' red' : ' amber');
+  $('sys-status').textContent = { standby: 'STANDBY', locked: 'POS LOCKED', armed: 'ALERTS ARMED', error: 'FAULT' }[state];
+  $('readout-status').textContent = { standby: 'STANDBY', locked: 'LOCKED', armed: 'ARMED', error: 'FAULT' }[state];
+  if (pos !== undefined) $('readout-pos').textContent = pos || 'NO FIX';
 }
 
 function message(text, isError = false) {
@@ -125,10 +138,11 @@ async function syncPushSubscription() {
 function choose(latitude, longitude, label) {
   chosen = { latitude: round(latitude), longitude: round(longitude), label };
   const el = $('chosen-location');
-  el.textContent = `📍 ${label} · ${coords(chosen.latitude, chosen.longitude)}`;
+  el.textContent = `TARGET LOCKED · ${label.toUpperCase()} · ${coords(chosen.latitude, chosen.longitude)}`;
   el.hidden = false;
   $('search-results').hidden = true;
   $('btn-subscribe').disabled = false;
+  hud('locked', coords(chosen.latitude, chosen.longitude));
   message('');
 }
 
@@ -138,17 +152,18 @@ function locate() {
     return;
   }
   const btn = $('btn-locate');
+  const label = btn.textContent;
   btn.disabled = true;
-  btn.textContent = 'Finding you…';
+  btn.textContent = '◎ Acquiring…';
   navigator.geolocation.getCurrentPosition(
     (pos) => {
       btn.disabled = false;
-      btn.textContent = 'Use my current location';
+      btn.textContent = label;
       choose(pos.coords.latitude, pos.coords.longitude, 'Current location');
     },
     (err) => {
       btn.disabled = false;
-      btn.textContent = 'Use my current location';
+      btn.textContent = label;
       const reason = err.code === err.PERMISSION_DENIED
         ? 'Location access was denied.'
         : "Couldn't get your location.";
@@ -212,7 +227,7 @@ async function subscribe() {
     return;
   }
 
-  await busy($('btn-subscribe'), 'Subscribing…', async () => {
+  await busy($('btn-subscribe'), '▶ Arming…', async () => {
     try {
       const sub = await createPushSubscription();
       const reg = await api('/register', { method: 'POST', auth: false, body: chosen });
@@ -228,7 +243,7 @@ async function subscribe() {
         throw e;
       }
       await renderSubscribed();
-      message("You're all set! Tap “Send a test notification” to check it works.");
+      message('Alerts armed. Hit TEST SIGNAL to check notifications reach you.');
     } catch (e) {
       message(e.status === 429 ? 'Too many sign-ups from your network — try again in an hour.' : e.message, true);
     }
@@ -237,7 +252,7 @@ async function subscribe() {
 
 async function unsubscribe() {
   if (!confirm('Stop flight alerts and delete your saved location?')) return;
-  await busy($('btn-unsubscribe'), 'Unsubscribing…', async () => {
+  await busy($('btn-unsubscribe'), '■ Disarming…', async () => {
     try {
       const registration = await navigator.serviceWorker.ready;
       const sub = await registration.pushManager.getSubscription();
@@ -247,7 +262,7 @@ async function unsubscribe() {
       token = null;
       resetSetup();
       show('setup');
-      message("You've been unsubscribed and your data was deleted.");
+      message('Alerts disarmed. Your location and account were deleted.');
     } catch (e) {
       message(e.message, true);
     }
@@ -255,11 +270,11 @@ async function unsubscribe() {
 }
 
 async function sendTest() {
-  await busy($('btn-test'), 'Sending…', async () => {
+  await busy($('btn-test'), '⟐ Transmitting…', async () => {
     try {
       const r = await api('/me/test-notification', { method: 'POST' });
       if (r.sent > 0) {
-        message('Sent! It should appear in a few seconds.');
+        message('Test signal sent — it should appear in a few seconds.');
       } else if (r.removed > 0) {
         await syncPushSubscription();
         message('This browser needed to re-register — try the test again.');
@@ -281,6 +296,7 @@ async function renderSubscribed(me) {
   $('sub-radius').textContent = loc ? Math.round(loc.radiusKm) : 25;
   $('sub-coords').textContent = loc ? coords(loc.latitude, loc.longitude) : '';
   show('subscribed');
+  hud('armed', loc ? coords(loc.latitude, loc.longitude) : null);
 }
 
 function resetSetup() {
@@ -289,6 +305,7 @@ function resetSetup() {
   $('search-results').hidden = true;
   $('input-city').value = '';
   $('btn-subscribe').disabled = true;
+  hud('standby', null);
 }
 
 async function init() {
