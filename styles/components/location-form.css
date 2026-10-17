@@ -1,0 +1,44 @@
+/* City search, its results list, and the "target locked" line */
+
+.manual { margin-top: 24px; }
+.manual label { display: block; margin-bottom: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
+.manual-row { display: flex; gap: 10px; }
+
+input[type="search"] {
+  flex: 1;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--color-surface) 85%, transparent);
+  color: var(--color-accent);
+  font: 1rem var(--font-body);
+  caret-color: var(--color-warn);
+}
+input::placeholder { color: color-mix(in srgb, var(--color-muted) 60%, transparent); text-transform: uppercase; }
+input:focus-visible { outline: 2px solid var(--color-warn); outline-offset: 3px; }
+
+.results { list-style: none; margin: 12px 0 0; padding: 0; border: 1px solid var(--line); }
+.results li + li { border-top: 1px dashed var(--line); }
+.results button {
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.results button::before { content: "› "; color: var(--color-warn); }
+.results button:hover, .results button:focus-visible { background: var(--accent-faint); color: var(--color-accent); outline: none; }
+.results .sub { color: var(--color-muted); font-size: 0.85rem; padding-left: 1.1em; }
+
+.lock {
+  margin: 20px 0 0 !important;
+  padding: 12px 14px;
+  border-left: 3px solid var(--color-accent);
+  background: var(--accent-faint);
+  color: var(--color-accent);
+  text-shadow: var(--glow);
+}

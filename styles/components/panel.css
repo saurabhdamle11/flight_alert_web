@@ -1,0 +1,53 @@
+/* Bracketed panels, their section headings, and content inside them */
+
+.panel {
+  --c: var(--color-accent);
+  position: relative;
+  padding: var(--panel-padding);
+  background:
+    linear-gradient(var(--c), var(--c)) top left / 16px 2px no-repeat,
+    linear-gradient(var(--c), var(--c)) top left / 2px 16px no-repeat,
+    linear-gradient(var(--c), var(--c)) top right / 16px 2px no-repeat,
+    linear-gradient(var(--c), var(--c)) top right / 2px 16px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / 16px 2px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / 2px 16px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right / 16px 2px no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right / 2px 16px no-repeat,
+    var(--panel-bg);
+  border: 1px solid var(--line);
+}
+.panel p { margin: 0 0 20px; }
+
+.panel-head {
+  margin: 0 0 14px;
+  font: 700 0.78rem/1.3 var(--font-display);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  text-shadow: var(--glow);
+}
+.panel-head span {
+  display: inline-block;
+  min-width: 2.2em;
+  margin-right: 4px;
+  padding: 2px 5px;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  text-align: center;
+  text-shadow: none;
+}
+.panel-head:not(:first-child) { margin-top: var(--section-gap); }
+
+.checklist { margin: 0 0 20px; padding-left: 0; list-style: none; counter-reset: step; }
+.checklist li { counter-increment: step; margin-bottom: 10px; }
+.checklist li::before { content: "[" counter(step) "] "; color: var(--color-warn); }
+
+.actions { display: grid; gap: 16px; margin-top: 28px; }
+
+/* Long-form text on the info pages */
+.doc .panel { line-height: 1.7; }
+.doc .panel ul { margin: 0 0 20px; padding-left: 1.2em; }
+.doc .panel li { margin-bottom: 10px; }
+.doc .panel li::marker { color: var(--color-warn); }
+.doc .panel a { color: var(--color-accent); }
+.doc .panel > :last-child { margin-bottom: 0; }

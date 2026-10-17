@@ -1,0 +1,30 @@
+/* Top status bar with the system LED */
+
+.statusbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font: 600 0.72rem/1 var(--font-display);
+  letter-spacing: 0.18em;
+  color: var(--color-accent);
+  text-shadow: var(--glow);
+}
+.sys { display: inline-flex; align-items: center; gap: 8px; }
+
+.led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 8px var(--color-accent);
+  animation: blink 1.6s steps(2, start) infinite;
+}
+.led.warn { background: var(--color-warn); box-shadow: 0 0 8px var(--color-warn); }
+.led.danger { background: var(--color-danger); box-shadow: 0 0 8px var(--color-danger); animation: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .led { animation: none !important; }
+}

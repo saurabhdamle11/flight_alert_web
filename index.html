@@ -5,17 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Flight Whisperer</title>
   <meta name="description" content="Get a notification when a plane flies over your area.">
-  <meta name="theme-color" content="#030806">
+  <meta name="theme-color" content="#dcefff">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Flights">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="preload" href="/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/share-tech-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/styles.css">
-  <script src="/app.js" defer></script>
+  <link rel="stylesheet" href="/styles/main.css">
+  <script type="module" src="/js/main.js"></script>
 </head>
 <body>
   <div class="crt" aria-hidden="true"></div>
@@ -50,6 +50,7 @@
       </dl>
     </section>
 
+    <div class="console">
     <section id="view-loading" class="panel">
       <p class="dim blink-text">INITIALISING…</p>
     </section>
@@ -116,11 +117,9 @@
     </section>
 
     <p id="message" class="log" role="status" aria-live="polite" hidden></p>
+    </div>
 
-    <footer class="footer">
-      Flight data: <a href="https://opensky-network.org" target="_blank" rel="noopener">OpenSky Network</a> ·
-      Your location is only used to match planes overhead and is deleted when you unsubscribe.
-    </footer>
+    <site-footer class="footer"></site-footer>
   </main>
 </body>
 </html>

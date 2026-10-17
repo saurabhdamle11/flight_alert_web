@@ -1,0 +1,11 @@
+/* Status / error message line under the panels */
+
+.log {
+  margin: 24px 0 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--color-surface) 60%, transparent);
+  color: var(--color-accent);
+}
+.log::before { content: "> "; color: var(--color-warn); }
+.log.error { color: var(--color-danger); border-color: color-mix(in srgb, var(--color-danger) 45%, transparent); }

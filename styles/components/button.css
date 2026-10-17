@@ -1,0 +1,36 @@
+/* Instrument buttons. Variants set --b, the button's color. */
+
+.btn {
+  --b: var(--color-accent);
+  display: block;
+  width: 100%;
+  padding: 13px 16px;
+  border: 2px solid var(--b);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--color-surface), color-mix(in srgb, var(--color-surface) 70%, transparent));
+  color: var(--b);
+  font: 700 0.85rem/1 var(--font-display);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 0 var(--press-shadow);
+  cursor: pointer;
+  transition: transform 0.06s ease, box-shadow 0.06s ease, background 0.15s ease;
+}
+.btn:hover:not(:disabled) { background: color-mix(in srgb, var(--b) 12%, var(--color-surface)); }
+.btn:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 var(--press-shadow); }
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+.btn:focus-visible { outline: 2px solid var(--color-warn); outline-offset: 3px; }
+
+.btn-arm { --b: var(--color-warn); }
+.btn-arm:not(:disabled) { animation: pulse 2.2s ease-in-out infinite; }
+.btn-abort { --b: var(--color-danger); }
+.btn-small { width: auto; flex: none; padding: 0 16px; }
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 4px 0 var(--press-shadow), 0 0 0 transparent; }
+  50% { box-shadow: 0 4px 0 var(--press-shadow), 0 0 18px color-mix(in srgb, var(--color-warn) 35%, transparent); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-arm { animation: none !important; }
+}

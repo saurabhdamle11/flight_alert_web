@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Privacy Policy · Flight Whisperer</title>
+  <meta name="description" content="What data Flight Whisperer collects and how it is used.">
+  <meta name="theme-color" content="#dcefff">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="preload" href="/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/share-tech-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles/main.css">
+  <script type="module" src="/js/components/site-footer.js"></script>
+</head>
+<body>
+  <div class="crt" aria-hidden="true"></div>
+
+  <main class="hud doc">
+    <header class="statusbar">
+      <span class="callsign">FLT-WHSPR</span>
+      <span class="sys">INFO // PRIVACY</span>
+    </header>
+
+    <a class="back" href="/">← Back to radar</a>
+
+    <div class="title">
+      <h1>Privacy policy</h1>
+      <p class="tagline">Last updated 17 October 2026</p>
+    </div>
+
+    <section class="panel">
+      <h2 class="panel-head">The short version</h2>
+      <p>Flight Whisperer only keeps what it needs to tell you when a plane is overhead: an approximate
+        location and a way to send your browser a notification. There are no accounts, names or email
+        addresses. Unsubscribing deletes it all.</p>
+
+      <h2 class="panel-head">What we store</h2>
+      <ul>
+        <li><strong>Your location</strong>, rounded to about 1 km (two decimal places), plus a label
+          such as "Current location" or the city you picked. Used only to match aircraft passing near you.</li>
+        <li><strong>A push subscription</strong>: the address your browser provides so we can send it
+          notifications. It doesn't identify you personally.</li>
+        <li><strong>A random device token</strong>, kept in your browser's local storage, so this device
+          can manage its own alerts. It isn't a cookie and isn't used for tracking.</li>
+      </ul>
+
+      <h2 class="panel-head">Third-party services</h2>
+      <ul>
+        <li><strong>Open-Meteo</strong> receives the text you type in the city search, to look up places.
+          Using your device's location instead skips this.</li>
+        <li><strong>Your browser's push service</strong> (run by Google, Apple, Mozilla or Microsoft,
+          depending on your browser) delivers notifications to your device.</li>
+        <li><strong>OpenSky Network</strong> supplies flight positions. Your data isn't sent to them.</li>
+        <li><strong>Flightradar24</strong> opens when you tap a notification, and their own privacy policy applies there.</li>
+        <li><strong>Cloudflare</strong> hosts this site and provides privacy-friendly Web Analytics,
+          which counts page visits without cookies.</li>
+      </ul>
+
+      <h2 class="panel-head">What we don't do</h2>
+      <ul>
+        <li>We don't sell or share your data.</li>
+        <li>We don't use advertising or tracking cookies.</li>
+        <li>We don't ask for your name, email or phone number.</li>
+      </ul>
+
+      <h2 class="panel-head">Deleting your data</h2>
+      <p>Press <strong>Disarm &amp; unsubscribe</strong> on the main page. This removes your push
+        subscription and deletes your saved location and device token from our server straight away.</p>
+
+      <h2 class="panel-head">Changes</h2>
+      <p>If this policy changes, the date at the top of this page will change too.</p>
+    </section>
+
+    <site-footer class="footer"></site-footer>
+  </main>
+</body>
+</html>
