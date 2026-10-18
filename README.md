@@ -19,9 +19,10 @@ iPhone/iPad: Web Push only works from the Home Screen app (iOS 16.4+); the page 
 |---|---|
 | `index.html` | The app page (no framework, no build step — native ES modules) |
 | `about.html`, `privacy.html` | Static info pages linked from the footer |
+| `404.html` | Not-found page; Cloudflare serves it for missing paths (`not_found_handling` in `wrangler.jsonc`) |
 | `styles/theme.css` | **Theme config**: colors, fonts, widths and spacing — edit here to restyle |
 | `styles/main.css` | Entry stylesheet; imports `base.css`, `layout.css` and `styles/components/*.css` |
-| `js/config.js` | API URLs, geolocation/search settings, footer links |
+| `js/config.js` | API URLs, geolocation/search settings, footer links and copyright |
 | `js/main.js` | Entry script: wires up the views and picks which one to show |
 | `js/views/` | One module per card (`setup.js`, `subscribed.js`) |
 | `js/services/` | API client, session token, push subscriptions, location search |

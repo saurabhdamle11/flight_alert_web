@@ -1,7 +1,7 @@
 // <site-footer class="footer"></site-footer> — footer links shared by every page.
-// The link list is FOOTER_LINKS in config.js; the current page is highlighted.
+// The link list is FOOTER_LINKS in config.js (current page highlighted), followed by COPYRIGHT.
 
-import { FOOTER_LINKS } from '../config.js';
+import { FOOTER_LINKS, COPYRIGHT } from '../config.js';
 
 const pageKey = (path) => path.replace(/\.html$/, '').replace(/\/index$/, '/');
 
@@ -18,7 +18,10 @@ class SiteFooter extends HTMLElement {
       if (pageKey(href) === here) a.setAttribute('aria-current', 'page');
       nav.append(a);
     }
-    this.replaceChildren(nav);
+    const copy = document.createElement('p');
+    copy.className = 'footer-copy';
+    copy.textContent = COPYRIGHT;
+    this.replaceChildren(nav, copy);
   }
 }
 

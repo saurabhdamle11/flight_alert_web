@@ -1,4 +1,4 @@
-/* Full-page aircraft photo behind the app page (<body class="backdrop">).
+/* Full-page aircraft photo behind a page (<body class="backdrop">).
    A wash of the page color keeps text readable; it thins toward the bottom
    so the tails show through. Photo: Jason Leung on Unsplash. */
 
@@ -15,9 +15,10 @@
     url("/images/tails.jpg") 35% 70% / cover no-repeat;
 }
 
-/* Wide screens: the photo shows on the left, the controls side stays calm */
+/* Wide screens: the photo shows on the left, the controls side stays calm.
+   Centered pages (about, privacy) add .backdrop-even and keep the even wash above. */
 @media (min-width: 900px) {
-  .backdrop::before {
+  .backdrop:not(.backdrop-even)::before {
     background:
       linear-gradient(90deg,
         transparent 30%,

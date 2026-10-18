@@ -25,6 +25,7 @@
 .btn-secondary:hover:not(:disabled) { filter: brightness(0.96); }
 .btn-danger { --bg: var(--color-fill); --fg: var(--color-danger); }
 .btn-danger:hover:not(:disabled) { filter: brightness(0.96); }
+.btn-inline { display: inline-flex; align-items: center; width: auto; text-decoration: none; }
 .btn-small { width: auto; flex: none; min-height: 0; padding: 0 20px; }
 
 @media (prefers-color-scheme: dark) {

@@ -10,5 +10,7 @@
 
 .footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 28px; }
 .footer-nav a { color: var(--color-muted); text-decoration: none; }
+.footer-copy { margin: 16px 0 0; text-align: center; color: var(--color-muted); font-size: 0.78rem; }
+
 .footer-nav a:hover,
 .footer-nav a[aria-current="page"] { color: var(--color-text); }

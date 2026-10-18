@@ -20,3 +20,6 @@ export const FOOTER_LINKS = [
   { href: '/about.html', label: 'About' },
   { href: '/privacy.html', label: 'Privacy policy' },
 ];
+
+/** Copyright line under the footer links */
+export const COPYRIGHT = '© 2026 Saurabh Damle';

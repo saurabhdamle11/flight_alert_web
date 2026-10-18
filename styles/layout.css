@@ -47,3 +47,18 @@ h1 {
 .doc .title { position: static; text-align: left; margin: 48px 0 32px; }
 .doc .title h1 { font-size: clamp(2.1rem, 9vw, 3.1rem); }
 .doc .tagline { margin-left: 0; max-width: none; }
+
+/* ── 404 page ───────────────────────────────────────────────────────────── */
+
+.page.notfound { display: flex; flex-direction: column; min-height: 100vh; }
+.notfound .title { position: static; flex: 1; margin: 18vh 0 48px; text-align: center; }
+.notfound .title .tagline { margin-left: auto; }
+.notfound .code {
+  margin: 0 0 16px;
+  color: var(--color-accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.notfound .btn { margin-top: 32px; }
