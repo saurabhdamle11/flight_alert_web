@@ -1,0 +1,23 @@
+/* Top bar: brand on the left, back link (info pages) on the right */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+
+.back { font-size: 0.9rem; font-weight: 500; text-decoration: none; }
+.back:hover { text-decoration: underline; }

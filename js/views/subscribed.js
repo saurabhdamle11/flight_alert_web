@@ -1,16 +1,16 @@
-// "Alerts armed" panel: shows the saved location, test signal, unsubscribe
+// "You're all set" card: shows the saved location, test signal, unsubscribe
 
 import { $, busy } from '../lib/dom.js';
 import { coords } from '../lib/format.js';
 import { api } from '../services/api.js';
 import { clearToken } from '../services/session.js';
 import { removePushSubscription, syncPushSubscription } from '../services/push.js';
-import { hud, message } from '../ui/hud.js';
+import { message } from '../ui/message.js';
 import { show } from '../ui/views.js';
 
 let onUnsubscribed = () => {};
 
-/** Shows the armed view for `me` (fetched from the API when not given). */
+/** Shows the subscribed view for `me` (fetched from the API when not given). */
 export async function renderSubscribed(me) {
   me = me || await api('/me');
   const loc = me.location;
@@ -18,18 +18,17 @@ export async function renderSubscribed(me) {
   $('sub-radius').textContent = loc ? Math.round(loc.radiusKm) : 25;
   $('sub-coords').textContent = loc ? coords(loc.latitude, loc.longitude) : '';
   show('subscribed');
-  hud('armed', loc ? coords(loc.latitude, loc.longitude) : null);
 }
 
 async function unsubscribe() {
   if (!confirm('Stop flight alerts and delete your saved location?')) return;
-  await busy($('btn-unsubscribe'), '■ Disarming…', async () => {
+  await busy($('btn-unsubscribe'), 'Turning off…', async () => {
     try {
       await removePushSubscription();
       await api('/me', { method: 'DELETE' }).catch((e) => { if (e.status !== 401) throw e; });
       clearToken();
       onUnsubscribed();
-      message('Alerts disarmed. Your location and account were deleted.');
+      message('Alerts are off. Your location and account were deleted.');
     } catch (e) {
       message(e.message, true);
     }
@@ -37,11 +36,11 @@ async function unsubscribe() {
 }
 
 async function sendTest() {
-  await busy($('btn-test'), '⟐ Transmitting…', async () => {
+  await busy($('btn-test'), 'Sending…', async () => {
     try {
       const r = await api('/me/test-notification', { method: 'POST' });
       if (r.sent > 0) {
-        message('Test signal sent — it should appear in a few seconds.');
+        message('Test sent — it should appear in a few seconds.');
       } else if (r.removed > 0) {
         await syncPushSubscription();
         message('This browser needed to re-register — try the test again.');

@@ -6,3 +6,10 @@
 
 /sw.js
   Cache-Control: no-cache
+
+# Always revalidate modules and styles, so a deploy never mixes old and new files
+/js/*
+  Cache-Control: no-cache
+
+/styles/*
+  Cache-Control: no-cache

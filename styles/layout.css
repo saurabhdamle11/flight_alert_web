@@ -1,50 +1,49 @@
 /* Page frame: content column, title block, two-column layout, info pages */
 
-.hud {
+.page {
   max-width: var(--content-width);
   margin: 0 auto;
-  padding: max(24px, env(safe-area-inset-top)) var(--gutter) max(40px, env(safe-area-inset-bottom));
+  padding: max(16px, env(safe-area-inset-top)) var(--gutter) max(40px, env(safe-area-inset-bottom));
 }
 
-.title { text-align: center; margin: 36px 0 24px; }
+.title { text-align: center; margin: 40px 0 32px; }
 h1 {
   margin: 0;
-  font: 800 clamp(1.35rem, 6vw, 1.75rem)/1.1 var(--font-display);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  text-shadow: 0 0 14px color-mix(in srgb, var(--color-accent) 25%, transparent);
+  font: 500 clamp(2.1rem, 9vw, 3.1rem)/1.08 var(--font-display);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
 }
-.tagline { margin: 12px 0 0; color: var(--color-muted); }
+.tagline {
+  margin: 14px auto 0;
+  max-width: 30ch;
+  font-size: 1.1rem;
+  color: var(--color-muted);
+  text-wrap: balance;
+}
 
-/* Wide screens: radar on the left, controls on the right */
+/* Wide screens: headline on the left, controls on the right */
 @media (min-width: 900px) {
-  .hud {
+  .page {
     max-width: var(--content-width-wide);
+    min-height: 100vh;
     padding-left: var(--gutter-wide);
     padding-right: var(--gutter-wide);
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
     column-gap: var(--column-gap);
     align-items: start;
   }
-  .statusbar, .title, .footer { grid-column: 1 / -1; }
-  .title { margin: 48px 0 40px; }
+  .topbar, .footer { grid-column: 1 / -1; }
+  .title { position: sticky; top: 72px; margin: 72px 0 0; text-align: left; }
+  .title h1 { font-size: clamp(2.8rem, 4.6vw, 3.8rem); }
+  .title .tagline { margin-left: 0; }
+  .console { margin-top: 80px; }
 }
 
 /* ── Info pages (about, privacy) ────────────────────────────────────────── */
 
-.hud.doc { display: block; max-width: var(--doc-width); }
-.doc .title { margin: 28px 0 32px; }
-
-.back {
-  display: inline-block;
-  margin: 32px 0 0;
-  font: 600 0.72rem/1 var(--font-display);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  text-decoration: none;
-}
-.back:hover { text-decoration: underline; text-underline-offset: 4px; }
-.back:focus-visible { outline: 2px solid var(--color-warn); outline-offset: 3px; }
+.page.doc { display: block; min-height: 0; max-width: var(--doc-width); }
+.doc .title { position: static; text-align: left; margin: 48px 0 32px; }
+.doc .title h1 { font-size: clamp(2.1rem, 9vw, 3.1rem); }
+.doc .tagline { margin-left: 0; max-width: none; }

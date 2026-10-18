@@ -1,36 +1,33 @@
-/* Instrument buttons. Variants set --b, the button's color. */
+/* Pill buttons. Variants set --bg and --fg. */
 
 .btn {
-  --b: var(--color-accent);
+  --bg: var(--color-text);
+  --fg: var(--color-bg);
   display: block;
   width: 100%;
-  padding: 13px 16px;
-  border: 2px solid var(--b);
-  border-radius: var(--radius);
-  background: linear-gradient(180deg, var(--color-surface), color-mix(in srgb, var(--color-surface) 70%, transparent));
-  color: var(--b);
-  font: 700 0.85rem/1 var(--font-display);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  box-shadow: 0 4px 0 var(--press-shadow);
+  min-height: 50px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--fg);
+  font: 600 1rem/1 var(--font-body);
   cursor: pointer;
-  transition: transform 0.06s ease, box-shadow 0.06s ease, background 0.15s ease;
+  transition: transform 0.12s ease, filter 0.15s ease, opacity 0.15s ease;
 }
-.btn:hover:not(:disabled) { background: color-mix(in srgb, var(--b) 12%, var(--color-surface)); }
-.btn:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 var(--press-shadow); }
+.btn:hover:not(:disabled) { filter: brightness(1.12); }
+.btn:active:not(:disabled) { transform: scale(0.98); }
 .btn:disabled { opacity: 0.35; cursor: not-allowed; }
-.btn:focus-visible { outline: 2px solid var(--color-warn); outline-offset: 3px; }
+.btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 
-.btn-arm { --b: var(--color-warn); }
-.btn-arm:not(:disabled) { animation: pulse 2.2s ease-in-out infinite; }
-.btn-abort { --b: var(--color-danger); }
-.btn-small { width: auto; flex: none; padding: 0 16px; }
+.btn-accent { --bg: var(--color-accent); --fg: var(--color-on-accent); }
+.btn-secondary { --bg: var(--color-fill); --fg: var(--color-text); }
+.btn-secondary:hover:not(:disabled) { filter: brightness(0.96); }
+.btn-danger { --bg: var(--color-fill); --fg: var(--color-danger); }
+.btn-danger:hover:not(:disabled) { filter: brightness(0.96); }
+.btn-small { width: auto; flex: none; min-height: 0; padding: 0 20px; }
 
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 4px 0 var(--press-shadow), 0 0 0 transparent; }
-  50% { box-shadow: 0 4px 0 var(--press-shadow), 0 0 18px color-mix(in srgb, var(--color-warn) 35%, transparent); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .btn-arm { animation: none !important; }
+@media (prefers-color-scheme: dark) {
+  .btn-secondary:hover:not(:disabled),
+  .btn-danger:hover:not(:disabled) { filter: brightness(1.15); }
 }

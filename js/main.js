@@ -4,7 +4,7 @@ import { $ } from './lib/dom.js';
 import { api, vapidKey } from './services/api.js';
 import { getToken, clearToken } from './services/session.js';
 import { pushSupported, isIos, isStandalone, registerServiceWorker, syncPushSubscription } from './services/push.js';
-import { message } from './ui/hud.js';
+import { message } from './ui/message.js';
 import { show } from './ui/views.js';
 import { initSetup, resetSetup } from './views/setup.js';
 import { initSubscribed, renderSubscribed } from './views/subscribed.js';

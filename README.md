@@ -23,12 +23,14 @@ iPhone/iPad: Web Push only works from the Home Screen app (iOS 16.4+); the page 
 | `styles/main.css` | Entry stylesheet; imports `base.css`, `layout.css` and `styles/components/*.css` |
 | `js/config.js` | API URLs, geolocation/search settings, footer links |
 | `js/main.js` | Entry script: wires up the views and picks which one to show |
-| `js/views/` | One module per panel (`setup.js`, `subscribed.js`) |
+| `js/views/` | One module per card (`setup.js`, `subscribed.js`) |
 | `js/services/` | API client, session token, push subscriptions, location search |
-| `js/ui/`, `js/lib/` | HUD/status updates, view switching; small DOM/storage/format helpers |
+| `js/ui/`, `js/lib/` | Message line, view switching; small DOM/storage/format helpers |
 | `js/components/site-footer.js` | `<site-footer>` element shared by every page |
 | `sw.js` | Service worker: `push` → notification, `notificationclick` → open URL |
+| `images/` | Background photo (Jason Leung, Unsplash License) |
 | `manifest.webmanifest`, `icons/` | PWA install metadata and icons (`icons/*.svg` are the sources) |
+| `robots.txt`, `sitemap.xml` | Crawler rules and page list for search engines — add new pages to the sitemap |
 | `_headers` | Response headers (CSP, `no-cache` for `sw.js`) |
 | `wrangler.jsonc`, `.assetsignore` | Cloudflare Worker config; files excluded from publishing |
 

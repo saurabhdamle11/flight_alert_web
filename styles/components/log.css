@@ -1,11 +1,14 @@
-/* Status / error message line under the panels */
+/* Status / error message under the cards */
 
 .log {
-  margin: 24px 0 0;
-  padding: 12px 14px;
-  border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--color-surface) 60%, transparent);
-  color: var(--color-accent);
+  margin: 16px 0 0;
+  padding: 14px 18px;
+  border-radius: var(--radius-control);
+  background: var(--color-fill);
+  color: var(--color-text);
+  font-size: 0.95rem;
 }
-.log::before { content: "> "; color: var(--color-warn); }
-.log.error { color: var(--color-danger); border-color: color-mix(in srgb, var(--color-danger) 45%, transparent); }
+.log.error {
+  background: color-mix(in srgb, var(--color-danger) 10%, var(--color-surface));
+  color: var(--color-danger);
+}

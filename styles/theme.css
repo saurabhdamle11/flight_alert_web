@@ -2,69 +2,72 @@
  * Flight Whisperer — theme config.
  *
  * Every color, font and key size lives here. Change the values in the
- * "Palette" block and the whole site follows, since component styles only
- * use these variables (and shades mixed from them).
+ * "Palette" blocks and the whole site follows, since component styles only
+ * use these variables (and shades mixed from them). Dark mode follows the
+ * system setting and has its own palette below.
  *
  * Also update when changing the background color:
  *   - <meta name="theme-color"> in index.html, about.html, privacy.html
  *   - "background_color" / "theme_color" in manifest.webmanifest
- * The wide-screen breakpoint (900px) is in layout.css, radar.css and footer.css;
+ * The wide-screen breakpoint (900px) is in layout.css and backdrop.css;
  * CSS can't put it in a variable.
  */
 
-/* ── Fonts ──────────────────────────────────────────────────────────────── */
-
-@font-face {
-  font-family: "Orbitron";
-  src: url("/fonts/orbitron-latin.woff2") format("woff2");
-  font-weight: 500 800;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Share Tech Mono";
-  src: url("/fonts/share-tech-mono-latin.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-}
-
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
 
-  /* ── Palette ── */
-  --color-bg: #dcefff;        /* page background */
-  --color-surface: #ffffff;   /* panels, buttons, inputs */
-  --color-text: #0d2b45;      /* body text */
-  --color-accent: #0b6db3;    /* headings, readouts, primary buttons */
-  --color-muted: #4a6f8c;     /* labels, secondary text */
-  --color-warn: #8f5400;      /* arm button, prompts, range ring */
-  --color-danger: #c62828;    /* errors, unsubscribe */
+  /* ── Palette (light) ── */
+  --color-bg: #faf9f5;        /* page background (warm ivory) */
+  --color-surface: #ffffff;   /* cards */
+  --color-fill: #f0eee6;      /* inputs, secondary buttons */
+  --color-text: #141413;      /* body text, primary buttons */
+  --color-muted: #6b6a63;     /* labels, secondary text */
+  --color-accent: #b4532f;    /* links, the subscribe button (clay) */
+  --color-danger: #b42318;    /* errors, unsubscribe */
   --color-on-accent: #ffffff; /* text on solid accent fills */
-  --color-shadow: #0b2d50;    /* drop shadows and the CRT overlay */
+  --color-shadow: #3d3929;    /* soft shadows */
 
   /* ── Shades derived from the palette (normally no need to edit) ── */
-  --line: color-mix(in srgb, var(--color-accent) 30%, transparent);
-  --accent-faint: color-mix(in srgb, var(--color-accent) 8%, transparent);
-  --panel-bg: color-mix(in srgb, var(--color-surface) 72%, transparent);
-  --radar-edge: color-mix(in srgb, var(--color-accent) 22%, var(--color-surface));
-  --glow: 0 0 6px color-mix(in srgb, var(--color-accent) 20%, transparent);
-  --press-shadow: color-mix(in srgb, var(--color-shadow) 18%, transparent);
+  --line: color-mix(in srgb, var(--color-text) 9%, transparent);
+  --focus-ring: 0 0 0 4px color-mix(in srgb, var(--color-accent) 25%, transparent);
+  --shadow-card:
+    0 1px 2px color-mix(in srgb, var(--color-shadow) 5%, transparent),
+    0 8px 28px color-mix(in srgb, var(--color-shadow) 6%, transparent);
 
   /* ── Typography ── */
-  --font-display: "Orbitron", "Arial Black", system-ui, sans-serif;
-  --font-body: "Share Tech Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  --font-size: 16px;
-  --line-height: 1.55;
+  --font-display: ui-serif, "New York", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-size: 17px;
+  --line-height: 1.5;
 
   /* ── Layout & spacing ── */
   --content-width: 560px;       /* single column (phones, small windows) */
-  --content-width-wide: 1080px; /* two-column layout on wide screens */
-  --doc-width: 720px;           /* about / privacy pages */
+  --content-width-wide: 1040px; /* two-column layout on wide screens */
+  --doc-width: 680px;           /* about / privacy pages */
   --gutter: 20px;               /* page side padding */
   --gutter-wide: 40px;
-  --column-gap: 64px;           /* gap between radar and controls */
-  --section-gap: 40px;          /* space between sections inside a panel */
-  --panel-padding: 28px 26px;
-  --radius: 3px;
-  --radar-size: 250px;
-  --radar-size-wide: 360px;
+  --column-gap: 64px;           /* gap between headline and controls */
+  --section-gap: 36px;          /* space between sections inside a card */
+  --card-padding: 28px;
+  --radius: 22px;               /* cards */
+  --radius-control: 14px;       /* inputs, list rows */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* ── Palette (dark) ── */
+    --color-bg: #1f1e1d;
+    --color-surface: #2a2927;
+    --color-fill: #353431;
+    --color-text: #f5f4ee;
+    --color-muted: #a3a198;
+    --color-accent: #e08a6a;
+    --color-danger: #f08072;
+    --color-on-accent: #1f1e1d;
+    --color-shadow: #000000;
+
+    --line: color-mix(in srgb, var(--color-text) 10%, transparent);
+    --shadow-card: 0 1px 2px color-mix(in srgb, var(--color-shadow) 30%, transparent);
+  }
 }

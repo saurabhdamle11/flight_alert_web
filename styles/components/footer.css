@@ -2,24 +2,13 @@
 
 .footer {
   display: block;
-  margin-top: 48px;
-  text-align: center;
-  font-size: 0.78rem;
-  color: var(--color-muted);
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
 }
 
 .footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 28px; }
-.footer-nav a {
-  color: var(--color-muted);
-  font: 600 0.7rem/1 var(--font-display);
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  text-decoration: none;
-}
+.footer-nav a { color: var(--color-muted); text-decoration: none; }
 .footer-nav a:hover,
-.footer-nav a[aria-current="page"] { color: var(--color-accent); text-decoration: underline; text-underline-offset: 4px; }
-.footer-nav a:focus-visible { outline: 2px solid var(--color-warn); outline-offset: 3px; }
-
-@media (min-width: 900px) {
-  .footer { margin-top: 64px; }
-}
+.footer-nav a[aria-current="page"] { color: var(--color-text); }

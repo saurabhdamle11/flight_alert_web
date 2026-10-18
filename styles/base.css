@@ -1,40 +1,31 @@
-/* Reset, page background, CRT overlay and small text utilities */
+/* Reset, page background and small text utilities */
 
 * { box-sizing: border-box; }
 html, body { margin: 0; }
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--color-surface) 70%, transparent), transparent 60%),
-    radial-gradient(ellipse at 50% 120%, color-mix(in srgb, var(--color-accent) 10%, transparent), transparent 50%),
-    var(--color-bg);
+  background: var(--color-bg);
   color: var(--color-text);
   font: var(--font-size) / var(--line-height) var(--font-body);
   -webkit-font-smoothing: antialiased;
-}
-
-/* CRT scanlines + vignette over everything, never blocking input */
-.crt {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 10;
-  background:
-    repeating-linear-gradient(to bottom, color-mix(in srgb, var(--color-shadow) 3.5%, transparent) 0 1px, transparent 1px 3px),
-    radial-gradient(ellipse at center, transparent 60%, color-mix(in srgb, var(--color-shadow) 12%, transparent));
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .dim { color: var(--color-muted); }
 .small { font-size: 0.85rem; }
-strong { color: var(--color-accent); font-weight: normal; text-shadow: var(--glow); }
+.mono { font-family: var(--font-mono); font-size: 0.85em; }
+strong { font-weight: 600; }
 
-.blink-text { animation: blink 1.2s steps(2, start) infinite; }
+a { color: var(--color-accent); text-underline-offset: 3px; }
+a:focus-visible { outline: none; border-radius: 4px; box-shadow: var(--focus-ring); }
+
+.pulse-text { animation: fade 1.4s ease-in-out infinite alternate; }
 
 [hidden] { display: none !important; }
 
-@keyframes blink { to { visibility: hidden; } }
+@keyframes fade { to { opacity: 0.35; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .blink-text { animation: none !important; }
+  .pulse-text { animation: none !important; }
 }

@@ -1,4 +1,4 @@
-// "Position" + "Alerts" panel: pick a location, then subscribe
+// "Choose a location" + "Turn on alerts" card: pick a location, then subscribe
 
 import { $, busy } from '../lib/dom.js';
 import { round, coords } from '../lib/format.js';
@@ -6,7 +6,7 @@ import { api } from '../services/api.js';
 import { setToken, clearToken } from '../services/session.js';
 import { createPushSubscription } from '../services/push.js';
 import { geolocationSupported, currentPosition, searchPlaces } from '../services/location.js';
-import { hud, message } from '../ui/hud.js';
+import { message } from '../ui/message.js';
 import { show } from '../ui/views.js';
 
 let chosen = null; // { latitude, longitude, label }
@@ -15,11 +15,10 @@ let onSubscribed = async () => {};
 function choose(latitude, longitude, label) {
   chosen = { latitude: round(latitude), longitude: round(longitude), label };
   const el = $('chosen-location');
-  el.textContent = `TARGET LOCKED · ${label.toUpperCase()} · ${coords(chosen.latitude, chosen.longitude)}`;
+  el.textContent = `${label} · ${coords(chosen.latitude, chosen.longitude)}`;
   el.hidden = false;
   $('search-results').hidden = true;
   $('btn-subscribe').disabled = false;
-  hud('locked', coords(chosen.latitude, chosen.longitude));
   message('');
 }
 
@@ -31,7 +30,7 @@ async function locate() {
   const btn = $('btn-locate');
   const label = btn.textContent;
   btn.disabled = true;
-  btn.textContent = '◎ Acquiring…';
+  btn.textContent = 'Finding you…';
   try {
     const pos = await currentPosition();
     choose(pos.coords.latitude, pos.coords.longitude, 'Current location');
@@ -85,7 +84,7 @@ async function searchCity(event) {
     message('');
     renderResults(results);
   } catch {
-    message('City search is unavailable right now. Try "Use my current location".', true);
+    message('City search is unavailable right now. Try "Use my current location" instead.', true);
   }
 }
 
@@ -101,7 +100,7 @@ async function subscribe() {
     return;
   }
 
-  await busy($('btn-subscribe'), '▶ Arming…', async () => {
+  await busy($('btn-subscribe'), 'Turning on…', async () => {
     try {
       const sub = await createPushSubscription();
       const reg = await api('/register', { method: 'POST', auth: false, body: chosen });
@@ -115,7 +114,7 @@ async function subscribe() {
         throw e;
       }
       await onSubscribed();
-      message('Alerts armed. Hit TEST SIGNAL to check notifications reach you.');
+      message('Alerts are on. Send a test to check notifications reach you.');
     } catch (e) {
       message(e.status === 429 ? 'Too many sign-ups from your network — try again in an hour.' : e.message, true);
     }
@@ -128,7 +127,6 @@ export function resetSetup() {
   $('search-results').hidden = true;
   $('input-city').value = '';
   $('btn-subscribe').disabled = true;
-  hud('standby', null);
 }
 
 /** `subscribed` runs after a successful subscribe, to show the armed view. */

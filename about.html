@@ -5,55 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>About · Flight Whisperer</title>
   <meta name="description" content="What Flight Whisperer is and how it works.">
-  <meta name="theme-color" content="#dcefff">
+  <meta name="theme-color" content="#faf9f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1f1e1d" media="(prefers-color-scheme: dark)">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
-  <link rel="preload" href="/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/fonts/share-tech-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles/main.css">
   <script type="module" src="/js/components/site-footer.js"></script>
 </head>
 <body>
-  <div class="crt" aria-hidden="true"></div>
-
-  <main class="hud doc">
-    <header class="statusbar">
-      <span class="callsign">FLT-WHSPR</span>
-      <span class="sys">INFO // ABOUT</span>
+  <main class="page doc">
+    <header class="topbar">
+      <a class="brand" href="/"><img src="/icons/icon.svg" alt="">Flight Whisperer</a>
+      <a class="back" href="/">← Back to app</a>
     </header>
-
-    <a class="back" href="/">← Back to radar</a>
 
     <div class="title">
       <h1>About</h1>
       <p class="tagline">Get pinged when a plane flies over you.</p>
     </div>
 
-    <section class="panel">
-      <h2 class="panel-head">What it does</h2>
+    <section class="card">
+      <h2 class="card-head">What it does</h2>
       <p>Flight Whisperer sends a notification to your phone or computer when an aircraft flies within
         about 25 km of a location you choose. There's no app to download and no account to create —
         it runs in your browser.</p>
 
-      <h2 class="panel-head">How it works</h2>
+      <h2 class="card-head">How it works</h2>
       <ul>
-        <li><strong>Set your position.</strong> Use your device's location or search for a city.</li>
-        <li><strong>Arm alerts.</strong> Your browser asks for permission to show notifications.</li>
+        <li><strong>Choose a location.</strong> Use your device's location or search for a city.</li>
+        <li><strong>Turn on alerts.</strong> Your browser asks for permission to show notifications.</li>
         <li><strong>Get pinged.</strong> When a plane passes overhead, you get a notification. Tap it to
           see the flight on Flightradar24.</li>
-        <li><strong>Disarm any time.</strong> Unsubscribing stops alerts and deletes your saved location.</li>
+        <li><strong>Turn off any time.</strong> Unsubscribing stops alerts and deletes your saved location.</li>
       </ul>
 
-      <h2 class="panel-head">iPhone and iPad</h2>
+      <h2 class="card-head">iPhone and iPad</h2>
       <p>On iOS 16.4 or later, notifications only work after you add Flight Whisperer to your Home Screen
         (Share → Add to Home Screen) and open it from there.</p>
 
-      <h2 class="panel-head">Credits</h2>
+      <h2 class="card-head">Credits</h2>
       <ul>
         <li>Flight data: <a href="https://opensky-network.org" target="_blank" rel="noopener">OpenSky Network</a></li>
         <li>City search: <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a></li>
         <li>Flight details: <a href="https://www.flightradar24.com" target="_blank" rel="noopener">Flightradar24</a></li>
+        <li>Background photo: <a href="https://unsplash.com/photos/airliners-on-airway-20_q1tJBEyI" target="_blank" rel="noopener">Jason Leung on Unsplash</a></li>
       </ul>
     </section>
 
